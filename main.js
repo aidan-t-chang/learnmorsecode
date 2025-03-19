@@ -95,8 +95,12 @@ function makeVisible() {
 document.getElementById('checkbox').addEventListener('click', makeVisible);
 document.getElementById('reset').addEventListener('click', reset);
 
+// time of short should be < 200
+// 201 - 1000 should be long
+// spaces should be indicated by button press?
+
 // TODO:
-// - add togglable morse code table
+// - add togglable morse code table ✅
 // - make it so that you are actually able to input morse code
 // - api generate quotes to practice morse code
 // - figure out the logistics between spaces between long presses vs reg space between long presses ✅

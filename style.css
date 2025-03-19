@@ -68,3 +68,7 @@ input:checked + .slider:before {
 .test {
     display: inline-block;
 }
+
+td {
+    font-size: 30px;
+}
