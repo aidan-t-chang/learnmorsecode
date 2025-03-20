@@ -95,6 +95,32 @@ function makeVisible() {
 document.getElementById('checkbox').addEventListener('click', makeVisible);
 document.getElementById('reset').addEventListener('click', reset);
 
+
+const apiEndpoint = 'https://thequoteshub.com/api/';
+async function fetchQuote() {
+    try {
+        const response = await fetch(apiEndpoint, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        // console.log(data);
+        document.getElementById('quote').textContent = data.text;
+    } catch (error) {
+        console.error('Error fetching the quote:', error);
+    }
+}
+
+fetchQuote();
+
+
 // time of short should be < 200
 // 201 - 1000 should be long
 // spaces should be indicated by button press?
@@ -102,6 +128,7 @@ document.getElementById('reset').addEventListener('click', reset);
 // TODO:
 // - add togglable morse code table ✅
 // - make it so that you are actually able to input morse code
-// - api generate quotes to practice morse code
+// - api generate quotes to practice morse code ✅
 // - figure out the logistics between spaces between long presses vs reg space between long presses ✅
 // - settings menu to customize the time for dot, dash, and space
+// - checker to make sure the morse code being inputted is actually right
