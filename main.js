@@ -95,33 +95,28 @@ function makeVisible() {
 document.getElementById('checkbox').addEventListener('click', makeVisible);
 document.getElementById('reset').addEventListener('click', reset);
 
-
-const apiEndpoint = 'https://thequoteshub.com/api/';
-async function fetchQuote() {
-    try {
-        const response = await fetch(apiEndpoint, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
+const api = "https://random-word-api.vercel.app/api?words=";
+const word_numbers = 3;
+const new_api = api + word_numbers;
+function fetchWord() {
+    document.getElementById('word').innerHTML = '';
+    fetch(new_api)
+    .then(response => response.json())
+    .then(data => {
+        for (let i=0; i < data.length;i++) {
+            if (i > 0) {
+                document.getElementById('word').innerHTML += " ";
             }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            document.getElementById('word').innerHTML += data[i];
         }
-
-        const data = await response.json();
-        // console.log(data);
-        document.getElementById('quote').textContent = data.text;
-    } catch (error) {
-        console.error('Error fetching the quote:', error);
-    }
+    })
+    .catch(error => console.error('Error fetching random word:', error));
 }
 
 
-document.getElementById('new').addEventListener('click', fetchQuote);
+fetchWord();
 
-fetchQuote();
+document.getElementById('newword').addEventListener('click', fetchWord);
 
 morse_dict = {
     ".-":'A',
@@ -162,7 +157,7 @@ morse_dict = {
     "-----": '0'
 }
 
-
+// display the morse code/english 
 
 // time of short should be < 200
 // 201 - 1000 should be long
@@ -171,7 +166,8 @@ morse_dict = {
 // TODO:
 // - add togglable morse code table ✅
 // - make it so that you are actually able to input morse code
-// - api generate quotes to practice morse code ✅
+// - api generate words to practice morse code ✅
 // - figure out the logistics between spaces between long presses vs reg space between long presses ✅
 // - settings menu to customize the time for dot, dash, and space
 // - checker to make sure the morse code being inputted is actually right
+// - change the number of words that can be displayed 
