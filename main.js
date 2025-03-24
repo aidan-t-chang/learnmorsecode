@@ -95,10 +95,9 @@ function makeVisible() {
 document.getElementById('checkbox').addEventListener('click', makeVisible);
 document.getElementById('reset').addEventListener('click', reset);
 
-const api = "https://random-word-api.vercel.app/api?words=";
-const word_numbers = 3;
-const new_api = api + word_numbers;
-function fetchWord() {
+function fetchWord(wordCount) {
+    const api = "https://random-word-api.vercel.app/api?words=";
+    const new_api = api + wordCount;
     document.getElementById('word').innerHTML = '';
     fetch(new_api)
     .then(response => response.json())
@@ -113,11 +112,23 @@ function fetchWord() {
     .catch(error => console.error('Error fetching random word:', error));
 }
 
+let wordCount = 3
+function fetchWordFromInput() {
+    wordCount = document.getElementById('wordCountInput').value; // Get input value
+    if (!isNaN(wordCount) && wordCount > 0) { // Ensure valid input
+        fetchWord(wordCount);
+        // console.log(wordCount);
+    } else {
+        console.error('Please enter a valid positive number');
+    }
+}
 
-fetchWord();
+function changeWordCount(form) {
+    word_numbers = form.wordcount;
+    console.log(word_numbers);
+}
 
-document.getElementById('newword').addEventListener('click', fetchWord);
-
+fetchWord(3);
 morse_dict = {
     ".-":'A',
     "-...": 'B',
