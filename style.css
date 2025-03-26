@@ -72,3 +72,7 @@ input:checked + .slider:before {
 td {
     font-size: 30px;
 }
+
+.words {
+    font-size: 45px;
+}

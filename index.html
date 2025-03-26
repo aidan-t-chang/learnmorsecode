@@ -104,6 +104,7 @@
 
         <button id="press">Press</button>
         <button id="reset">Reset</button>
+        <button id="end">End Phrase</button>
         <input type="number" id="wordCountInput" placeholder="Enter word count" />
         <button onclick="fetchWordFromInput()">Fetch Words</button>
         <div id="word"></div>
@@ -114,8 +115,10 @@
         <div name="distancecontainer" id="distancecontainer">
             <p id="distanceText">Distance Between Presses: </p>
         </div>
-
-        <p id="word" name="word"></p>
+        
+        <div id="words" class="words">
+            <div id="to_add" class="to_add"></div>
+        </div>
         <script src="main.js"></script>
     </body>
 </html>

@@ -1,7 +1,73 @@
-// track both time between presses and length of press?
+// The length of a "dot" is used as the unit of time. And a dash lasts for three dots. So, if a dot is 1 second, then a dash is 3 seconds.
+
+// Between every letter, there is to be three "dots" worth of empty space. So, that's the answer you're looking for: 
+// When you have three dots worth of space, that's how you know a letter is finished.
+
+// And in order to show that a new word is coming, there has to be a space of seven dots between words. 
+// This seems a bit less necessary than separating letters, but I'm sure it helps avoid some confusion anyway.
+
+// - a reddit user
+
 let count = 0;
 let first = null;
 let count2 = 0;
+let dot_length = 200;
+let dash_length = dot_length * 7 - 1;
+let space_length = dot_length * 7;
+let finished_letter = dot_length * 3;
+morse_dict = {
+    ".-":'a',
+    "-...": 'b',
+    "-.-.": 'c',
+    "-..": 'd',
+    ".": 'e',
+    "..-.": 'f',
+    "--.": 'g',
+    "....": 'h',
+    "..": 'i',
+    ".---": 'j',
+    "-.-": 'k',
+    ".-..": 'l', 
+    "--": 'm',
+    "-.": 'n',
+    "---": 'o',
+    ".--.": 'p',
+    "--.-": 'q',
+    ".-.": 'r',
+    "...": 's',
+    "-": 't',
+    "..-": 'u',
+    "..-": 'v',
+    ".--": 'w',
+    "-..-": 'x',
+    "-.--": 'y',
+    "--..": 'z',
+    ".----": '1',
+    "..---": '2',
+    "...--": '3',
+    "....-": '4',
+    ".....": '5',
+    "-....": '6',
+    "--...": '7',
+    "---..": '8',
+    "----.": '9',
+    "-----": '0'
+}
+
+function addWord(word_in_morse) {
+    const morseword = document.createTextNode(morse_dict[word_in_morse]);
+    document.getElementById('words').appendChild(morseword);
+}
+
+function forceAdd() {
+    enqueue = document.getElementById('to_add');
+    if (morse_dict[enqueue.textContent] !== undefined) {
+        addWord(enqueue.textContent);
+    }
+    enqueue.innerHTML = '';
+}
+
+document.getElementById('end').addEventListener('click', forceAdd);
 
 // track the duration and the distance
 const button = document.getElementById('press');
@@ -17,8 +83,22 @@ button.addEventListener('mousedown', (event) => {
         document.getElementById('distanceText').appendChild(newdist);
         first = Date.now();
         count2++;
+        
+        // dictate the space and finished letter
+        if (finished_letter < timeElapsed && timeElapsed < space_length) {
+            var eq = document.getElementById('to_add');
+            console.log(eq.textContent)
+            if (morse_dict[eq.textContent] !== undefined) {
+                console.log(morse_dict[eq.textContent]);
+                addWord(eq.textContent);
+            }
+            eq.innerHTML = '';    
+        }
+        else if (timeElapsed >= space_length) {
+            document.getElementById('words').appendChild(document.createTextNode(' '));
+        }
     }
-    // if it is the first time the button is being pressed, it doesn't matter
+    
     });
 
 button.addEventListener('mouseup', (event) => {
@@ -30,8 +110,14 @@ button.addEventListener('mouseup', (event) => {
     const newnode = document.createTextNode(duration);
     document.getElementById('durationText').appendChild(newnode);
     count++;
-
     first = Date.now(); // now that the button is no longer pressed, the time starts
+    // dictate the dot vs dash
+    if (duration <= dot_length) {
+        document.getElementById('to_add').appendChild(document.createTextNode('.'));
+    }
+    else if (duration > dot_length) {
+        document.getElementById('to_add').appendChild(document.createTextNode('-'));
+    }
     });
 
 // for mobile users (touchstart, touchend)
@@ -75,6 +161,11 @@ function reset() {
     newdistance.textContent = "Distance Between Presses: ";
     newdistance.setAttribute('id', 'distanceText');
     document.getElementById('distancecontainer').appendChild(newdistance);
+
+    document.getElementById('words').innerHTML = '';
+    to_add = document.createElement('div');
+    to_add.setAttribute('id', 'to_add');
+    document.getElementById('words').appendChild(to_add)
 
     count = 0;
     count2 = 0;
@@ -129,44 +220,6 @@ function changeWordCount(form) {
 }
 
 fetchWord(3);
-morse_dict = {
-    ".-":'A',
-    "-...": 'B',
-    "-.-.": 'C',
-    "-..": 'D',
-    ".": 'E',
-    "..-.": 'F',
-    "--.": 'G',
-    "....": 'H',
-    "..": 'I',
-    ".---": 'J',
-    "-.-": 'K',
-    ".-..": 'L',
-    "--": 'M',
-    "-.": 'N',
-    "---": 'O',
-    ".--.": 'P',
-    "--.-": 'Q',
-    ".-.": 'R',
-    "...": 'S',
-    "-": 'T',
-    "..-": 'U',
-    "..-": 'V',
-    ".--": 'W',
-    "-..-": 'X',
-    "-.--": 'Y',
-    "--..": 'Z',
-    ".----": '1',
-    "..---": '2',
-    "...--": '3',
-    "....-": '4',
-    ".....": '5',
-    "-....": '6',
-    "--...": '7',
-    "---..": '8',
-    "----.": '9',
-    "-----": '0'
-}
 
 // display the morse code/english 
 
@@ -176,9 +229,9 @@ morse_dict = {
 
 // TODO:
 // - add togglable morse code table ✅
-// - make it so that you are actually able to input morse code
+// - make it so that you are actually able to input morse code ✅
 // - api generate words to practice morse code ✅
 // - figure out the logistics between spaces between long presses vs reg space between long presses ✅
 // - settings menu to customize the time for dot, dash, and space
-// - checker to make sure the morse code being inputted is actually right
-// - change the number of words that can be displayed 
+// - checker to make sure the morse code being inputted is actually right 🥴
+// - change the number of words that can be displayed ✅
