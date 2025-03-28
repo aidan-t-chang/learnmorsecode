@@ -37,7 +37,7 @@ morse_dict = {
     "...": 's',
     "-": 't',
     "..-": 'u',
-    "..-": 'v',
+    "...-": 'v',
     ".--": 'w',
     "-..-": 'x',
     "-.--": 'y',
@@ -220,6 +220,22 @@ function changeWordCount(form) {
 }
 
 fetchWord(3);
+
+const open = document.getElementById("openModal");
+const close = document.getElementById('closeModal');
+const modal = document.getElementById("modal");
+
+open.addEventListener('click', () => {
+    modal.classList.add("open");
+})
+
+close.addEventListener("click", () => {
+    modal.classList.remove("open");
+})
+
+function updateSettings() {
+    
+}
 
 // display the morse code/english 
 

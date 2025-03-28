@@ -105,7 +105,23 @@
         <button id="press">Press</button>
         <button id="reset">Reset</button>
         <button id="end">End Phrase</button>
-        <input type="number" id="wordCountInput" placeholder="Enter word count" />
+        <button id="openModal">Settings</button>
+        <div class="modal" id="modal">
+            <div class="modal-inner">
+                <h2>Settings</h2>
+                <div class="botton">
+                    
+                    <input type="number" id="dotLengthInput" placeholder="Enter dot length">
+                    <button>Set Length</button><br>
+                    <p id="dash">Dash Length: </p>
+                    <p id="space">Space Length: </p>
+                    <p id="spaceBetween">Space Between Letters: </p>
+
+                </div>
+                <button id="closeModal">Close</button>
+            </div>
+        </div>
+        <input type="number" id="wordCountInput" placeholder="Enter word count">
         <button onclick="fetchWordFromInput()">Fetch Words</button>
         <div id="word"></div>
 
