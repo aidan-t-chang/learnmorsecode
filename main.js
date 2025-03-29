@@ -91,7 +91,8 @@ changeAmounts(200);
 
 function addWord(word_in_morse) {
     const morseword = document.createTextNode(morse_dict[word_in_morse]);
-    document.getElementById('words').appendChild(morseword);
+    document.getElementById('to_add').before(morseword);
+    // document.getElementById('words').appendChild(morseword);
 }
 
 function forceAdd() {
@@ -122,9 +123,7 @@ button.addEventListener('mousedown', (event) => {
         // dictate the space and finished letter
         if (finished_letter < timeElapsed && timeElapsed < space_length) {
             var eq = document.getElementById('to_add');
-            console.log(eq.textContent)
             if (morse_dict[eq.textContent] !== undefined) {
-                console.log(morse_dict[eq.textContent]);
                 addWord(eq.textContent);
             }
             eq.innerHTML = '';    
@@ -217,9 +216,9 @@ function reset() {
     document.getElementById('distancecontainer').appendChild(newdistance);
 
     document.getElementById('words').innerHTML = '';
-    to_add = document.createElement('p');
-    to_add.setAttribute('id', 'to_add');
-    document.getElementById('words').appendChild(to_add)
+    to_add2 = document.createElement('p');
+    to_add2.setAttribute('id', 'to_add');
+    document.getElementById('words').appendChild(to_add2);
 
     count = 0;
     count2 = 0;
@@ -294,4 +293,4 @@ close.addEventListener("click", () => {
 // - figure out the logistics between spaces between long presses vs reg space between long presses ✅
 // - settings menu to customize the time for dot, dash, and space ✅
 // - change the number of words that can be displayed ✅
-// = make the website work on mobile as well
+// = make the website work on mobile as well✅

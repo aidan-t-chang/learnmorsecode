@@ -83,6 +83,8 @@ td {
 
 .words {
     font-size: 45px;
+    color: white;
+    font-family: "Hepta Slab", serif;
 }
 
 .modal {
@@ -177,3 +179,8 @@ table {
 .inside {
     color: white;
 }
+
+button {
+    font-family: "Hepta Slab", serif;
+}
+
