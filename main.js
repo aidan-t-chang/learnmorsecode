@@ -11,10 +11,10 @@
 let count = 0;
 let first = null;
 let count2 = 0;
-let dot_length = 200;
-let dash_length = dot_length * 7 - 1;
-let space_length = dot_length * 7;
-let finished_letter = dot_length * 3;
+var dot_length = 200;
+var dash_length = dot_length * 7 - 1;
+var space_length = dot_length * 7;
+var finished_letter = dot_length * 3;
 morse_dict = {
     ".-":'a',
     "-...": 'b',
@@ -53,6 +53,41 @@ morse_dict = {
     "----.": '9',
     "-----": '0'
 }
+
+function changeAmounts(dot_len) {
+    dot_length = dot_len;
+    dash_length = dot_length * 7 - 1;
+    space_length = dot_length * 7;
+    finished_letter = dot_length * 3;
+    
+
+    const dot_text = "Dot Length: " + dot_length + "ms";
+    document.getElementById('dot').innerHTML = dot_text;
+    dot_length++;
+
+    const dash_text = "Dash Length: " + dot_length + "-" + dash_length + "ms";
+    document.getElementById('dash').innerHTML = dash_text;
+
+    const space_text = "Space Length: " + space_length + "ms";
+    document.getElementById('space').innerHTML = space_text;
+
+    const finished_text = "Space Between Letters: " + finished_letter + "ms";
+    document.getElementById('spaceBetween').innerHTML = finished_text;
+}
+
+function changeAmountsFromInput() {
+    const input = document.getElementById("dotLengthInput").value;
+
+    if (!isNaN(input) && input > 0) {
+        changeAmounts(input);
+    } 
+    else {
+        console.error('Please enter a valid positive number');
+    }
+}
+
+changeAmounts(200);
+// document.getElementById('setLength').addEventListener("click", changeAmountsFromInput);
 
 function addWord(word_in_morse) {
     const morseword = document.createTextNode(morse_dict[word_in_morse]);
@@ -132,8 +167,21 @@ button.addEventListener('touchstart', (event) => {
         document.getElementById('distanceText').appendChild(newdist);
         first = Date.now();
         count2++;
+        
+        // dictate the space and finished letter
+        if (finished_letter < timeElapsed && timeElapsed < space_length) {
+            var eq = document.getElementById('to_add');
+            console.log(eq.textContent)
+            if (morse_dict[eq.textContent] !== undefined) {
+                console.log(morse_dict[eq.textContent]);
+                addWord(eq.textContent);
+            }
+            eq.innerHTML = '';    
+        }
+        else if (timeElapsed >= space_length) {
+            document.getElementById('words').appendChild(document.createTextNode(' '));
+        }
     }
-    // if it is the first time the button is being pressed, it doesn't matter
     });
 
 button.addEventListener('touchend', (event) => {
@@ -145,9 +193,15 @@ button.addEventListener('touchend', (event) => {
     const newnode = document.createTextNode(duration);
     document.getElementById('durationText').appendChild(newnode);
     count++;
-
-    first = Date.now();
-    });
+    first = Date.now(); // now that the button is no longer pressed, the time starts
+    // dictate the dot vs dash
+    if (duration <= dot_length) {
+        document.getElementById('to_add').appendChild(document.createTextNode('.'));
+    }
+    else if (duration > dot_length) {
+        document.getElementById('to_add').appendChild(document.createTextNode('-'));
+    }
+});
 
 function reset() {
     document.getElementById('durationcontainer').innerHTML = '';
@@ -163,7 +217,7 @@ function reset() {
     document.getElementById('distancecontainer').appendChild(newdistance);
 
     document.getElementById('words').innerHTML = '';
-    to_add = document.createElement('div');
+    to_add = document.createElement('p');
     to_add.setAttribute('id', 'to_add');
     document.getElementById('words').appendChild(to_add)
 
@@ -233,21 +287,11 @@ close.addEventListener("click", () => {
     modal.classList.remove("open");
 })
 
-function updateSettings() {
-    
-}
-
-// display the morse code/english 
-
-// time of short should be < 200
-// 201 - 1000 should be long
-// spaces should be indicated by button press?
-
 // TODO:
 // - add togglable morse code table ✅
 // - make it so that you are actually able to input morse code ✅
 // - api generate words to practice morse code ✅
 // - figure out the logistics between spaces between long presses vs reg space between long presses ✅
-// - settings menu to customize the time for dot, dash, and space
-// - checker to make sure the morse code being inputted is actually right 🥴
+// - settings menu to customize the time for dot, dash, and space ✅
 // - change the number of words that can be displayed ✅
+// = make the website work on mobile as well

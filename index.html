@@ -3,9 +3,14 @@
 <html>
     <head>
         <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab&display=swap" rel="stylesheet">
     </head>
     <body>
-        <h1>Aidan Chang's Morse Code Practice</h1>
+        <div class="whole">
+            <h1>Aidan Chang's Morse Code Practice</h1>
+        </div>
 
         <p class="test">Toggle Morse Code Table</p>
         <label class="switch">
@@ -108,14 +113,15 @@
         <button id="openModal">Settings</button>
         <div class="modal" id="modal">
             <div class="modal-inner">
-                <h2>Settings</h2>
+                <h2 class="inside">Settings</h2>
                 <div class="botton">
                     
-                    <input type="number" id="dotLengthInput" placeholder="Enter dot length">
-                    <button>Set Length</button><br>
-                    <p id="dash">Dash Length: </p>
-                    <p id="space">Space Length: </p>
-                    <p id="spaceBetween">Space Between Letters: </p>
+                    <input type="number" id="dotLengthInput" placeholder="Enter dot length (ms)">
+                    <button id="setLength" onclick="changeAmountsFromInput()">Set Length</button><br>
+                    <p id="dot" class="inside">Dot Length:</p>
+                    <p id="dash" class="inside">Dash Length: </p>
+                    <p id="space" class="inside">Space Length: </p>
+                    <p id="spaceBetween" class="inside">Space Between Letters: </p>
 
                 </div>
                 <button id="closeModal">Close</button>
@@ -123,7 +129,7 @@
         </div>
         <input type="number" id="wordCountInput" placeholder="Enter word count">
         <button onclick="fetchWordFromInput()">Fetch Words</button>
-        <div id="word"></div>
+        <p id="word"></p>
 
         <div name="durationcontainer" id="durationcontainer">
             <p id="durationText">Duration of Presses: </p>
@@ -132,9 +138,9 @@
             <p id="distanceText">Distance Between Presses: </p>
         </div>
         
-        <div id="words" class="words">
-            <div id="to_add" class="to_add"></div>
-        </div>
+        <p id="words" class="words">
+            <p id="to_add" class="to_add"></p>
+        </p>
         <script src="main.js"></script>
     </body>
 </html>
