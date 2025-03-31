@@ -154,6 +154,7 @@ button.addEventListener('mouseup', (event) => {
     }
     });
 
+// MOBILE ----------------------------
 // for mobile users (touchstart, touchend)
 button.addEventListener('touchstart', (event) => {
     startTime = new Date().getTime();
@@ -201,6 +202,13 @@ button.addEventListener('touchend', (event) => {
         document.getElementById('to_add').appendChild(document.createTextNode('-'));
     }
 });
+
+document.addEventListener("dblclick", function(event) {
+    event.preventDefault(); // Prevent the double-tap zoom
+}, { passive: false }); // Ensure you can call preventDefault
+
+
+// -----------------------------
 
 function reset() {
     document.getElementById('durationcontainer').innerHTML = '';
@@ -293,4 +301,5 @@ close.addEventListener("click", () => {
 // - figure out the logistics between spaces between long presses vs reg space between long presses ✅
 // - settings menu to customize the time for dot, dash, and space ✅
 // - change the number of words that can be displayed ✅
-// = make the website work on mobile as well✅
+// - make the website work on mobile as well✅
+// - fix the space detecting function

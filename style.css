@@ -184,3 +184,8 @@ button {
     font-family: "Hepta Slab", serif;
 }
 
+#press {
+    user-select: none; /* Standard for modern browsers */
+    -webkit-user-select: none; /* For WebKit browsers (e.g., Chrome, Safari) */
+    -ms-user-select: none; /* For older Microsoft Edge */
+}
